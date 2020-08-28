@@ -1,9 +1,14 @@
 require("dotenv").config()
 
-const { Client } = require("discord.js")
+const { Client, WebhookClient } = require("discord.js")
 
 const client = new Client({ partials: ["MESSAGE", "REACTION"] })
 const PREFIX = "$"
+
+const webhookClient = new WebhookClient(
+  process.env.WEBHOOK_ID,
+  process.env.WEBHOOK_TOKEN
+)
 
 client.login(process.env.DISCORDJS_BOT_TOKEN)
 
@@ -42,6 +47,9 @@ client.on("message", async (message) => {
             "An error occured: Either I do not have permissions or user ID is not correct"
           )
         }
+      } else if (CMD_NAME === "announce") {
+        const message = args.join(" ")
+        webhookClient.send(message)
       }
     }
   }
