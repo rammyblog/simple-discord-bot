@@ -2,7 +2,7 @@ require("dotenv").config()
 
 const { Client } = require("discord.js")
 
-const client = new Client()
+const client = new Client({ partials: ["MESSAGE", "REACTION"] })
 const PREFIX = "$"
 
 client.login(process.env.DISCORDJS_BOT_TOKEN)
@@ -43,6 +43,37 @@ client.on("message", async (message) => {
           )
         }
       }
+    }
+  }
+})
+
+client.on("messageReactionAdd", (reaction, user) => {
+  const { name } = reaction.emoji
+
+  const member = reaction.message.guild.members.cache.get(user.id)
+  if (reaction.message.id === "748928295009124403") {
+    switch (name) {
+      // Frontend
+      case "🍌":
+        member.roles
+          .add("748904831254790183")
+          .then((member) => console.log(member))
+          .catch((err) => console.log(err))
+        break
+      //  backend
+      case "🟠":
+        member.roles
+          .add("748904831254790183")
+          .then((member) => console.log(member))
+          .catch((err) => console.log(err))
+        break
+      // design
+      case "🍉":
+        member.roles
+          .add("748904831254790183")
+          .then((member) => console.log(member))
+          .catch((err) => console.log(err))
+        break
     }
   }
 })
